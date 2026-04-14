@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Two Sides of Her</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --wild: #c8a96e;
+    --tech: #5b8fa8;
+    --dark: #0d0d0d;
+    --cream: #f5f0e8;
+    --mid: #1e1e1e;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--dark);
+    color: var(--cream);
+    font-family: 'Cormorant Garamond', serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  .container {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 60px 28px 100px;
+  }
+
+  /* HEADER */
+  .title-block {
+    text-align: center;
+    margin-bottom: 72px;
+    opacity: 0;
+    animation: fadeUp 1.2s ease forwards 0.3s;
+  }
+
+  .title-block h1 {
+    font-size: clamp(2.6rem, 8vw, 4.2rem);
+    font-weight: 300;
+    letter-spacing: 0.04em;
+    line-height: 1.1;
+  }
+
+  .title-block h1 em {
+    font-style: italic;
+    color: var(--wild);
+  }
+
+  .title-block h1 span {
+    color: var(--tech);
+  }
+
+  .divider-title {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: 20px;
+    justify-content: center;
+  }
+
+  .divider-title::before,
+  .divider-title::after {
+    content: '';
+    width: 60px;
+    height: 1px;
+    background: linear-gradient(to right, transparent, #444);
+  }
+
+  .divider-title::after {
+    background: linear-gradient(to left, transparent, #444);
+  }
+
+  .subtitle {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    color: #666;
+    text-transform: uppercase;
+  }
+
+  /* SECTION LABELS */
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .section-label.wild { color: var(--wild); }
+  .section-label.tech { color: var(--tech); }
+  .section-label.reveal { color: #a0a0a0; }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+  }
+
+  .section-label.wild::after { background: linear-gradient(to right, var(--wild), transparent); }
+  .section-label.tech::after { background: linear-gradient(to right, var(--tech), transparent); }
+  .section-label.reveal::after { background: linear-gradient(to right, #555, transparent); }
+
+  /* STORY SECTIONS */
+  .story-section {
+    margin-bottom: 56px;
+    opacity: 0;
+    animation: fadeUp 1s ease forwards;
+  }
+
+  .story-section:nth-child(1) { animation-delay: 0.6s; }
+  .story-section:nth-child(2) { animation-delay: 1.0s; }
+  .story-section:nth-child(3) { animation-delay: 1.4s; }
+  .story-section:nth-child(4) { animation-delay: 1.8s; }
+  .story-section:nth-child(5) { animation-delay: 2.2s; }
+
+  p {
+    font-size: clamp(1.05rem, 2.5vw, 1.2rem);
+    line-height: 1.95;
+    font-weight: 300;
+    color: #d8d0c4;
+    margin-bottom: 18px;
+  }
+
+  p:last-child { margin-bottom: 0; }
+
+  /* STYLED TEXT */
+  .wild-word {
+    color: var(--wild);
+    font-style: italic;
+  }
+
+  .tech-word {
+    color: var(--tech);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.92em;
+    letter-spacing: 0.04em;
+  }
+
+  /* CROSSING PATHS VISUAL */
+  .crossing {
+    position: relative;
+    margin: 48px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    opacity: 0;
+    animation: fadeUp 1s ease forwards 1.6s;
+  }
+
+  .path-name {
+    font-size: 0.75rem;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 10px 22px;
+    border: 1px solid;
+    position: relative;
+    z-index: 2;
+  }
+
+  .path-name.a {
+    color: var(--wild);
+    border-color: var(--wild);
+    background: var(--dark);
+  }
+
+  .path-name.b {
+    color: var(--tech);
+    border-color: var(--tech);
+    background: var(--dark);
+    margin-left: -1px;
+  }
+
+  .cross-symbol {
+    font-size: 1.1rem;
+    color: #444;
+    margin: 0 14px;
+    z-index: 3;
+  }
+
+  /* REVEAL SECTION */
+  .reveal-section {
+    border-top: 1px solid #2a2a2a;
+    padding-top: 48px;
+    margin-top: 48px;
+  }
+
+  .reveal-quote {
+    font-size: clamp(1.3rem, 4vw, 1.85rem);
+    font-style: italic;
+    line-height: 1.6;
+    color: var(--cream);
+    text-align: center;
+    margin: 36px 0;
+    padding: 0 20px;
+    position: relative;
+  }
+
+  .reveal-quote::before {
+    content: '"';
+    position: absolute;
+    top: -20px;
+    left: 10px;
+    font-size: 5rem;
+    color: #222;
+    font-style: normal;
+    line-height: 1;
+  }
+
+  /* FINAL LINE */
+  .final-name {
+    text-align: center;
+    margin-top: 56px;
+    opacity: 0;
+    animation: fadeUp 1.4s ease forwards 3.2s;
+  }
+
+  .final-name h2 {
+    font-size: clamp(2rem, 7vw, 3.2rem);
+    font-weight: 300;
+    letter-spacing: 0.15em;
+  }
+
+  .final-name h2 .half-wild {
+    color: var(--wild);
+    font-style: italic;
+  }
+
+  .final-name h2 .half-tech {
+    color: var(--tech);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.8em;
+  }
+
+  .final-name p {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.4em;
+    color: #555;
+    text-transform: uppercase;
+    margin-top: 14px;
+    text-align: center;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(22px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* GRAIN OVERLAY */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 100;
+    opacity: 0.35;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="title-block">
+    <h1><em>Two</em> Sides of <span>Her</span></h1>
+    <div class="divider-title">
+      <span class="subtitle">a flash fiction</span>
+    </div>
+  </div>
+
+  <!-- PART ONE -->
+  <div class="story-section">
+    <div class="section-label wild">I — the free one</div>
+    <p>
+      She always arrived at the café first — barefoot in sandals even in October, a 
+      <span class="wild-word">wildflower</span> tucked behind her ear like punctuation. 
+      Her laugh came before she did, spilling through the doorway ahead of her whole body. 
+      She carried a journal that smelled of cedar and airport stamps. People noticed her the way you notice 
+      a window left open in winter — something alive rushing in.
+    </p>
+    <p>
+      She talked to strangers about rivers. She had opinions about clouds. 
+      She once cried at a sunset not because she was sad, but because she said 
+      <span class="wild-word">"beautiful things deserve witnesses."</span>
+      Everyone who knew her called her <em>Lia</em> — short for nothing, long for everything.
+    </p>
+  </div>
+
+  <!-- PART TWO -->
+  <div class="story-section">
+    <div class="section-label tech">II — the sharp one</div>
+    <p>
+      She walked into rooms like a <span class="tech-word">system update</span> — 
+      silent, inevitable, changing everything before you knew it happened. 
+      Her laptop never closed. Her eyes were always three thoughts ahead of the conversation. 
+      At parties she stood by the speaker, not because she loved the music, but because 
+      the bass drowned out small talk and small talk bored her.
+    </p>
+    <p>
+      She built things. Real things — models that could think, code that could breathe. 
+      She wore black like a <span class="tech-word">uniform</span>, kept her coffee black too. 
+      Warmth lived in her somewhere, people said, but it was encrypted. 
+      Everyone who knew her called her <em>Vera</em> — precise, clean, final.
+    </p>
+  </div>
+
+  <!-- CROSSING PATHS -->
+  <div class="crossing">
+    <span class="path-name a">Lia</span>
+    <span class="cross-symbol">✕</span>
+    <span class="path-name b">Vera</span>
+  </div>
+
+  <!-- PART THREE: CROSSINGS -->
+  <div class="story-section">
+    <div class="section-label reveal">III — the crossings</div>
+    <p>
+      They kept finding each other in the spaces between worlds.
+    </p>
+    <p>
+      First, a mountain trail in Lisbon — Lia photographing moss, Vera mapping a hiking route 
+      on her phone's GPS. They passed each other without words, only a glance, 
+      the kind that lasts exactly one second too long.
+    </p>
+    <p>
+      Second, a tech conference in Seoul. Lia was the photographer hired to shoot the event; 
+      Vera was on stage, mid-keynote, mid-sentence — and she stopped. 
+      Just for a breath. Because there was that face again, half-hidden behind a camera lens, 
+      <span class="wild-word">laughing</span> at something no one else had noticed.
+    </p>
+    <p>
+      Third — a rainy night bookstore in Amsterdam. One woman was buying a poetry collection. 
+      The other, a book on neural architecture. They reached for the last paper bag at the counter 
+      at the exact same moment. Their hands touched. They both pulled back. 
+      They both laughed. Different laughs — one like a bell, one like a key turning.
+    </p>
+    <p>
+      "We keep meeting," Lia said.
+    </p>
+    <p>
+      Vera tilted her head. "I've been thinking the same thing."
+    </p>
+    <p>
+      "Strange," said Lia. "I feel like I know you."
+    </p>
+    <p>
+      "Strange," said Vera softly. "I feel like I <em>am</em> you."
+    </p>
+  </div>
+
+  <!-- REVEAL -->
+  <div class="story-section reveal-section">
+    <div class="section-label reveal">IV — the mirror</div>
+    <p>
+      The bookstore owner cleared his throat. "You forgot your card, Miss—" 
+      He looked between them, confused. "I'm sorry — I only see one name here."
+    </p>
+    <p>
+      He held out the receipt.
+    </p>
+    <p>
+      One name. One signature. One birthday printed at the top from the loyalty program.
+    </p>
+    <p>
+      They stared at the paper. Then at each other. Then — slowly — at the window beside them, 
+      where the rain had turned the glass into a mirror.
+    </p>
+
+    <div class="reveal-quote">
+      There was only one woman standing there. And she was everything — 
+      the wildflower and the algorithm, the laugh and the silence, 
+      the open window and the locked door.
+    </div>
+
+    <p>
+      She had always known, somewhere underneath the noise of living, 
+      that she was too much for one version of herself. 
+      So she had split — given <span class="wild-word">wonder</span> to one half 
+      and <span class="tech-word">precision</span> to the other, 
+      let them wander the world separately until they were ready to be whole.
+    </p>
+    <p>
+      She picked up the receipt. Read her own name like a sentence she was finishing 
+      after a very long pause.
+    </p>
+    <p>
+      Outside, the rain softened. She stepped into it — 
+      barefoot in sandals, laptop bag on her shoulder, 
+      wildflower still tucked behind her ear — 
+      and she was <span class="wild-word">beautiful</span>, 
+      and she was <span class="tech-word">brilliant</span>, 
+      and she was, finally, just herself.
+    </p>
+  </div>
+
+  <!-- FINAL -->
+  <div class="final-name">
+    <h2>
+      <span class="half-wild">Lia</span>
+      &nbsp;&amp;&nbsp;
+      <span class="half-tech">Vera</span>
+    </h2>
+    <p>were never two — they were always one</p>
+  </div>
+
+</div>
+</body>
+</html>
